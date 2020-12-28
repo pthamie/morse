@@ -1,5 +1,6 @@
 #include <iostream>
 #include "./include/morse.h"
+#include "./include/wave.h"
 #include <string>
 
 
@@ -32,6 +33,12 @@ int main(int, char**) {
     }
     
 
+    wave w;
+
+    w.test_write_binary(42);
+    std::uint32_t v = w.test_read_binary();
+
+    std::cout << v << std::endl;
 
     
 }

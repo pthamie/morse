@@ -27,3 +27,4 @@ std::string morse::decode(const std::string &morse_string)
 
     return ret;
 }
+
