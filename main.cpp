@@ -35,10 +35,9 @@ int main(int, char**) {
 
     wave w;
 
-    w.test_write_binary(42);
-    std::uint32_t v = w.test_read_binary();
+    w.EncodeMorseCodesAsSound("../wave_examples/sos.wav", "... --- ...  ... --- ...");
 
-    std::cout << v << std::endl;
+    std::cout << w.DecodeMorseWavFile("../wave_examples/sos.wav");
 
     
 }

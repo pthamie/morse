@@ -9,6 +9,8 @@ ${mainSources}
 ${srcSources}
 )
 
+target_link_libraries(morse ${CMAKE_SOURCE_DIR}/lib/libmorse_lib.a)
+
 target_include_directories(morse PUBLIC
         "${PROJECT_SOURCE_DIR}/include"
         )
