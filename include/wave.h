@@ -20,4 +20,7 @@ public:
     void EncodeMorseCodesAsSound(const std::string &filename, const std::string &morse);
     std::string DecodeMorseWavFile(const std::string &filename);
 
+    
+    void test_write_binary(std::uint32_t v);
+    std::uint32_t test_read_binary();
 };
