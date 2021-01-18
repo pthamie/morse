@@ -39,8 +39,31 @@ Toutes les varaiations possibles n'ont pas été testées.
 
 En exemple de fichier .wav est présent dans le répertoire wave_examples.
 
+## Ecriture des tailles dans un fichier .wav
 
+```cpp
 
+    std::ofstream _wav;
+    
+    _wav.open(filename, std::ofstream::out | std::ofstream::binary);
+    if (_wav.is_open())
+    {
+        // Ecriture entête
+        // ... votre code ...
+        
+        // Ecriture des échantillons audio
+        // ... votre code ...
 
+        // Ecriture des tailles maintenant connues
+        _wav.seekp (4);
+        _size = _data_chunk_size + 36;
+        _wav.write(reinterpret_cast<char *>(&_size), sizeof(_size));
+        _wav.seekp (40);
+        _wav.write(reinterpret_cast<char *>(&_data_chunk_size), sizeof(_data_chunk_size));
+
+        _wav.close();
+    }
+
+```
 
 
