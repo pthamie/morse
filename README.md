@@ -66,4 +66,78 @@ En exemple de fichier .wav est présent dans le répertoire wave_examples.
 
 ```
 
+## Lecture header fichier .wav
+```cpp
 
+class wave_header
+{
+public:
+    wave_header();
+    ~wave_header();
+
+public:
+    char            RIFF[4] = {0};
+    std::uint32_t   size = 0;
+    char            WAVE[4] = {0};
+    char            fmt[4] = {0};
+    std::uint32_t   sub_chunk_size = 0;
+    std::uint16_t   audio_format = 0;
+    std::uint16_t   nb_channels;
+    std::uint32_t   sample_rate;
+    std::uint32_t   byte_rate;
+    std::uint16_t   block_align;
+    std::uint16_t   bit_depth;
+    char            data[4] = {0};
+    std::uint32_t   data_chunk_size;
+    void            *psamples = 0;
+
+public:
+    void Load (std::ifstream &ifs);   
+};
+
+
+
+wave_header::wave_header()
+{
+
+}
+
+wave_header::~wave_header()
+{
+    if (psamples)
+    {
+        free (psamples);
+        psamples = 0;
+    }
+}
+
+void wave_header::Load(std::ifstream &ifs)
+{
+    if (psamples)
+    {
+        free (psamples);
+        psamples = 0;
+    }
+
+    ifs.read(reinterpret_cast<char *>(&RIFF), sizeof(RIFF));
+
+    ifs.read(reinterpret_cast<char *>(&size), sizeof(size));
+    ifs.read(reinterpret_cast<char *>(&WAVE), sizeof(WAVE));
+    ifs.read(reinterpret_cast<char *>(&fmt), sizeof(fmt));
+    ifs.read(reinterpret_cast<char *>(&sub_chunk_size), sizeof (sub_chunk_size));
+    ifs.read(reinterpret_cast<char *>(&audio_format), sizeof(audio_format));
+    ifs.read(reinterpret_cast<char *>(&nb_channels), sizeof(nb_channels));
+    ifs.read(reinterpret_cast<char *>(&sample_rate), sizeof(sample_rate));
+    ifs.read(reinterpret_cast<char *>(&byte_rate), sizeof(byte_rate));
+    ifs.read(reinterpret_cast<char *>(&block_align), sizeof(block_align));
+    ifs.read(reinterpret_cast<char *>(&bit_depth), sizeof(bit_depth));
+    ifs.read(reinterpret_cast<char *>(&data), sizeof(data));
+    ifs.read(reinterpret_cast<char *>(&data_chunk_size), sizeof(data_chunk_size));
+
+    psamples = malloc (data_chunk_size);
+    ifs.read(reinterpret_cast<char *>(psamples), data_chunk_size);
+
+
+}
+
+```
